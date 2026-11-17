@@ -16,16 +16,17 @@
     button { font-family: inherit; }
 
     /* Encabezado */
-    .top { position: sticky; top: 0; z-index: 20; background: var(--navy); color: #fff; padding: 10px 14px 12px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+    .top { position: sticky; top: 0; z-index: 20; background: var(--navy); color: #fff; padding: 8px 12px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
     .top-row { display: flex; align-items: center; gap: 10px; max-width: 900px; margin: 0 auto; }
-    .brand { font-weight: 900; letter-spacing: 4px; font-size: 1.15em; }
-    .brand small { display: block; font-size: 0.55em; letter-spacing: 2px; font-weight: 700; opacity: .7; }
+    .brand { font-weight: 900; letter-spacing: 3px; font-size: 1em; line-height: 1.05; flex: none; }
+    .brand small { display: block; font-size: 0.52em; letter-spacing: 1.5px; font-weight: 700; opacity: .7; }
+    body:not(.en-art):not(.en-cart) .top-title { display: none; }
     .back { display: none; background: none; border: none; color: #fff; font-size: 1.5em; padding: 0 4px 0 0; cursor: pointer; }
     body.en-art .back, body.en-cart .back { display: block; }
     body.en-art .brand, body.en-cart .brand { display: none; }   /* adentro se ve el título */
     .top-title { flex: 1; min-width: 0; font-weight: 800; font-size: 1.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .search { max-width: 900px; margin: 10px auto 0; position: relative; }
-    .search input { width: 100%; padding: 11px 38px 11px 14px; border-radius: 12px; border: none; font-size: 16px; outline: none; background: #fff; color: var(--text); }
+    .search { flex: 1; min-width: 0; position: relative; }
+    .search input { width: 100%; padding: 9px 36px 9px 12px; border-radius: 12px; border: none; font-size: 16px; outline: none; background: #fff; color: var(--text); }
     .search button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: none; background: none; font-size: 1.1em; color: var(--muted); cursor: pointer; display: none; }
     .search.con button { display: block; }
     body.en-art .search, body.en-cart .search { display: none; }
@@ -37,8 +38,8 @@
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
     .art { background: var(--card); border-radius: 14px; overflow: hidden; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.06); display: flex; flex-direction: column; }
     .art:active { transform: scale(.98); }
-    .art .ph { aspect-ratio: 3/4; background: #e5e7eb; position: relative; overflow: hidden; }
-    .art .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .art .ph { aspect-ratio: 1/1; background: #e5e7eb; position: relative; overflow: hidden; }
+    .art .ph img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
     .art .ph .enc { position: absolute; top: 8px; right: 8px; background: var(--ok); color: #fff; font-weight: 800; font-size: 0.75em; padding: 3px 8px; border-radius: 10px; }
     .art .bd { padding: 9px 10px 11px; }
     .art .nm { font-weight: 800; font-size: 0.9em; line-height: 1.2; min-height: 2.4em; }
@@ -54,7 +55,7 @@
     .art-head .pr small { font-size: 0.6em; color: var(--muted); font-weight: 600; }
     .leyenda { font-size: 0.74em; color: var(--muted); margin: -2px 2px 10px; }
     .col { background: var(--card); border-radius: 14px; padding: 10px; margin-bottom: 10px; display: flex; gap: 12px; }
-    .col .ph { width: 96px; flex: none; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #e5e7eb; cursor: zoom-in; }
+    .col .ph { width: 76px; flex: none; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #e5e7eb; cursor: zoom-in; }
     .col .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .col .der { flex: 1; min-width: 0; }
     .col .cn { font-weight: 800; font-size: 1em; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
@@ -186,6 +187,23 @@
     .art-del { display: flex; justify-content: flex-end; margin-top: 6px; }
     .art-del button { border: none; background: none; color: var(--bad); font-weight: 700; font-size: 0.8em; cursor: pointer; padding: 4px 0; }
 
+    /* Carrito compacto: una línea por color, tocar = editar */
+    .cart-ayuda { font-size: 0.75em; color: var(--muted); margin: 0 2px 8px; }
+    .linea-art { padding: 9px 10px; }
+    .linea-art .sub { display: flex; justify-content: space-between; align-items: center; margin: 1px 0 4px; }
+    .lnk-del { border: none; background: none; color: var(--bad); font-weight: 700; font-size: 1em; cursor: pointer; padding: 2px 0; }
+    .cr { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; }
+    .cr:active { background: #f8fafc; }
+    .cr-img { width: 34px; height: 42px; border-radius: 6px; overflow: hidden; background: #e5e7eb; flex: none; }
+    .cr-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cr-d { flex: 1; min-width: 0; }
+    .cr-n { font-weight: 800; font-size: 0.86em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cr-n small { color: var(--muted); font-weight: 700; }
+    .cr-t { font-size: 0.78em; color: var(--text); margin-top: 1px; }
+    .cr-t b { color: var(--acc); }
+    .cr-ed { color: var(--muted); font-size: 0.9em; flex: none; }
+    .cr-del { border: none; background: none; font-size: 0.95em; padding: 6px 4px; cursor: pointer; flex: none; }
+
     /* Aviso con Deshacer */
     .undo { position: fixed; left: 50%; bottom: calc(88px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 80; background: #111827; color: #fff; border-radius: 12px; padding: 8px 8px 8px 14px; display: none; align-items: center; gap: 12px; font-size: 0.88em; width: max-content; font-weight: 700; box-shadow: 0 6px 20px rgba(0,0,0,.3); max-width: 92vw; }
     .undo.show { display: flex; }
@@ -198,11 +216,11 @@
         <button class="back" onclick="volver()" aria-label="Volver">‹</button>
         <div class="brand" id="brand">MIKRA<small>MAYORISTA</small></div>
         <div class="top-title" id="topTitle"></div>
-    </div>
     <div class="search" id="searchBox">
         <input id="q" type="search" placeholder="🔍 Buscar artículo" autocomplete="off" oninput="buscar()" onfocus="pintarSug()" onblur="setTimeout(cerrarSug, 150)" onkeydown="if(event.key==='Enter'){cerrarSug();this.blur();}">
         <button onclick="limpiarBusqueda()" aria-label="Borrar">✕</button>
         <div class="sug" id="sug" onpointerdown="event.preventDefault()"></div>
+    </div>
     </div>
 </div>
 
@@ -220,7 +238,7 @@
 <script>
 // ── Configuración ──
 const API = 'https://mikra-mayorista.rafaelassir.workers.dev';
-const WHATSAPP = '';   // número de Mikra con código de país, ej. '5491112345678'. Vacío = elegir el contacto al compartir.
+const WHATSAPP = '5491124824669';   // número de Mikra con código de país, ej. '5491112345678'. Vacío = elegir el contacto al compartir.
 
 const $ = id => document.getElementById(id);
 const fmt = n => '$' + Math.round(n).toLocaleString('es-AR');
@@ -237,6 +255,9 @@ try { pedido = JSON.parse(localStorage.getItem('mk_may_pedido') || '{}') || {}; 
 
 // Rango de stock (el worker nunca manda el número exacto)
 function rangoTxt(r) { return r <= 0 ? 'Agotado' : r === 1 ? 'Últimas' : '+' + r; }
+let MAX = {};   // sku → stock real (tope para no pedir de más; en pantalla igual se ve el rango)
+let _cargadoAt = 0;
+function maxDe(sku) { const m = MAX[sku]; return m == null ? Infinity : m; }
 function puntos(c) { return c.t.reduce((s, t) => s + Math.max(0, t[2]), 0); }   // stock aproximado de un color
 function fotoDe(nombre, color) {
     const a = CAT && CAT.arts.find(x => x.n === nombre), c = a && a.cols.find(x => x.c === color);
@@ -251,7 +272,7 @@ function hace(ts) {
     return m < 1 ? 'recién' : m < 60 ? 'hace ' + m + ' min' : 'hace ' + Math.round(m / 60) + ' h';
 }
 
-async function cargar() {
+async function cargar(silencioso) {   // devuelve cuántos talles del pedido hubo que corregir
     try {
         const r = await fetch(API + '/catalogo', { cache: 'no-store' });
         const d = await r.json();
@@ -262,18 +283,33 @@ async function cargar() {
             a.cols.sort((x, y) => puntos(y) - puntos(x) || x.c.localeCompare(y.c, 'es'));
             a.st = a.cols.reduce((s, c) => s + puntos(c), 0);
         });
-        // lo que había en el pedido y ya no existe / se agotó: se saca
+        _cargadoAt = Date.now();
+        // lo que había en el pedido y ya no existe / se agotó / supera lo que hay: se corrige
         const vivos = {};
-        CAT.arts.forEach(a => a.cols.forEach(c => c.t.forEach(t => { vivos[t[1]] = { r: t[2], p: a.p }; })));
-        let sacados = 0;
+        MAX = {};
+        CAT.arts.forEach(a => a.cols.forEach(c => c.t.forEach(t => {
+            vivos[t[1]] = { r: t[2], p: a.p };
+            if (t.length > 3) MAX[t[1]] = Math.max(0, t[3]);
+        })));
+        let sacados = 0, bajados = 0;
         Object.keys(pedido).forEach(sku => {
             const v = vivos[sku];
-            if (!v || v.r <= 0) { delete pedido[sku]; sacados++; }
-            else pedido[sku].p = v.p;   // precio actualizado
+            if (!v || v.r <= 0 || maxDe(sku) <= 0) { delete pedido[sku]; sacados++; return; }
+            pedido[sku].p = v.p;   // precio actualizado
+            if (pedido[sku].q > maxDe(sku)) { pedido[sku].q = maxDe(sku); bajados++; }
         });
-        if (sacados) { guardar(); toast('Se sacaron ' + sacados + ' talles que ya no hay'); }
-        abrirDesdeHash();
+        if (sacados || bajados) {
+            guardar();
+            toast(sacados && bajados ? 'Se actualizó el stock: se ajustaron ' + (sacados + bajados) + ' talles'
+                : sacados ? 'Se sacaron ' + sacados + ' talles que ya no hay' : 'Se ajustaron ' + bajados + ' talles a lo que hay');
+        }
+        if (silencioso) {   // actualizar sin mover la pantalla
+            if (vista === 'art' && artActual) artActual = CAT.arts.find(x => x.n === artActual.n) || null;
+            if (vista === 'art' && !artActual) aLista(); else if (!_ed) pintar(); else pintarBarra();
+        } else abrirDesdeHash();
+        return sacados + bajados;
     } catch (e) {
+        if (silencioso) return 0;
         $('main').innerHTML = '<div class="vacio">No se pudo cargar el catálogo 😕<br><br><button class="btn-vaciar" style="color:var(--acc)" onclick="location.reload()">Reintentar</button></div>';
     }
 }
@@ -385,16 +421,22 @@ function sumar(ci, sku) {
     const a = artActual, c = a.cols[ci], t = c.t.find(x => x[1] === sku);
     if (!t) return;
     if (t[2] <= 0) { toast('Ese talle está agotado'); return; }
+    if (((pedido[sku] || {}).q || 0) + 1 > maxDe(sku)) { vibrar(60); toast('No hay más de ese talle (' + maxDe(sku) + ' en total)'); return; }
     if (!pedido[sku]) pedido[sku] = _item(a, c, t);
     pedido[sku].q++;
     vibrar(15); guardar(); pintar();
 }
 function curva(ci) {   // 1 de cada talle con stock
     const a = artActual, c = a.cols[ci];
-    let n = 0;
-    c.t.forEach(t => { if (t[2] > 0) { if (!pedido[t[1]]) pedido[t[1]] = _item(a, c, t); pedido[t[1]].q++; n++; } });
-    if (!n) { toast('No hay talles con stock'); return; }
-    vibrar(20); guardar(); pintar(); toast('+1 de cada talle (' + n + ')');
+    let n = 0, sin = 0;
+    c.t.forEach(t => {
+        if (t[2] <= 0) return;
+        if (((pedido[t[1]] || {}).q || 0) + 1 > maxDe(t[1])) { sin++; return; }
+        if (!pedido[t[1]]) pedido[t[1]] = _item(a, c, t);
+        pedido[t[1]].q++; n++;
+    });
+    if (!n) { toast(sin ? 'Ya tenés todo lo que hay de este color' : 'No hay talles con stock'); return; }
+    vibrar(20); guardar(); pintar(); toast('+1 de cada talle (' + n + ')' + (sin ? ' · ' + sin + ' sin más stock' : ''));
 }
 function sacarColor(ci) {
     const c = artActual.cols[ci];
@@ -460,11 +502,19 @@ function edSuma() {
     const q = _ed.c.t.reduce((s, t) => s + ((pedido[t[1]] || {}).q || 0), 0);
     $('edSum').textContent = q ? q + (q === 1 ? ' prenda' : ' prendas') + ' de este color · ' + fmt(q * _ed.a.p) : 'Nada de este color todavía';
 }
-function edSet(sku, v) {
-    const t = _ed.c.t.find(x => x[1] === sku); if (!t || t[2] <= 0) return;
-    const q = setQ(sku, v, _item(_ed.a, _ed.c, t));
+function edSet(sku, v, callado) {
+    const t = _ed.c.t.find(x => x[1] === sku); if (!t || t[2] <= 0) return 0;
+    let want = Math.max(0, Math.floor(Number(v) || 0));
+    const m = maxDe(sku);
+    if (want > m) {   // nunca más de lo que hay
+        want = m;
+        const inp = $('ed_' + sku); if (inp) inp.value = m || '';
+        if (!callado) { vibrar(60); toast('Solo hay ' + m + ' de ese talle'); }
+    }
+    const q = setQ(sku, want, _item(_ed.a, _ed.c, t));
     const box = $('edq_' + sku); if (box) box.classList.toggle('lleno', q > 0);
     guardar(); edSuma(); pintarBarra();
+    return q;
 }
 function edPaso(sku, d) {
     const inp = $('ed_' + sku); if (!inp) return;
@@ -475,9 +525,10 @@ function edPaso(sku, d) {
 function edTodos(n) {
     n = Math.floor(Number(n) || 0);
     if (n < 1) { toast('Poné cuántas de cada talle'); return; }
-    let k = 0;
-    _ed.c.t.forEach(t => { if (t[2] > 0) { const inp = $('ed_' + t[1]); if (inp) inp.value = n; edSet(t[1], n); k++; } });
-    vibrar(20); toast(k ? n + ' de cada talle (' + k + ' talles)' : 'No hay talles con stock');
+    let k = 0, menos = 0;
+    _ed.c.t.forEach(t => { if (t[2] > 0) { const inp = $('ed_' + t[1]); if (inp) inp.value = n; if (edSet(t[1], n, true) < n) menos++; k++; } });
+    vibrar(20);
+    toast(!k ? 'No hay talles con stock' : menos ? n + ' de cada talle · ' + menos + (menos === 1 ? ' talle quedó' : ' talles quedaron') + ' con lo que hay' : n + ' de cada talle (' + k + ' talles)');
 }
 function edQuitar() {
     const skus = _ed.c.t.map(t => t[1]).filter(s => pedido[s]);
@@ -515,6 +566,7 @@ function deshacer() {
 // ── Pedido ──
 function cambiar(sku, d) {
     const it = pedido[sku]; if (!it) return;
+    if (d > 0 && it.q + d > maxDe(sku)) { toast('No hay más de ese talle'); return; }
     it.q += d;
     if (it.q <= 0) delete pedido[sku];
     guardar(); pintar();
@@ -541,25 +593,22 @@ function pintarCart() {
     const g = agrupado(), { prendas, total } = totales();
     if (!g.length) { $('main').innerHTML = '<div class="vacio">Todavía no agregaste nada 🛒<br><br><button class="btn-vaciar" style="color:var(--acc)" onclick="volver()">Ver artículos</button></div>'; return; }
     _g = g;
-    let h = '';
+    let h = '<div class="cart-ayuda">Tocá un color para cambiar cantidades.</div>';
     g.forEach((a, ai) => {
         const q = a.cols.reduce((s, c) => s + c.its.reduce((t, x) => t + x.q, 0), 0);
-        h += '<div class="linea-art"><div class="h"><span>' + esc(a.n) + '</span><span>' + fmt(q * a.p) + '</span></div><div class="sub">' + q + ' prendas × ' + fmt(a.p) + '</div>';
+        h += '<div class="linea-art"><div class="h"><span>' + esc(a.n) + '</span><span>' + fmt(q * a.p) + '</span></div>' +
+            '<div class="sub"><span>' + q + ' prendas × ' + fmt(a.p) + '</span><button class="lnk-del" onclick="quitarArtCart(' + ai + ')">Quitar artículo</button></div>';
         a.cols.forEach((c, ci) => {
             const qc = c.its.reduce((t, x) => t + x.q, 0);
             const img = fotoDe(a.n, c.c);
-            h += '<div class="cg"><div class="cg-h"><div class="cg-img" onclick="zoom(\'' + esc(img) + '\')">' + (img ? '<img src="' + esc(chica(img)) + '" loading="lazy" referrerpolicy="no-referrer" alt="">' : '') + '</div>' +
-                '<span class="cnm">' + esc(c.c) + ' <small>· ' + qc + '</small></span>' +
-                '<button class="ic" onclick="editarColor(_g[' + ai + '].n,_g[' + ai + '].cols[' + ci + '].c)">✎ Editar</button>' +
-                '<button class="ic del" onclick="quitarColorCart(' + ai + ',' + ci + ')" aria-label="Quitar color">🗑</button></div>';
-            c.its.forEach(x => {
-                h += '<div class="li"><div class="d"><b>' + esc(x.t) + '</b></div><div class="qty chico lleno"><button onclick="cambiar(\'' + x.sku + '\',-1)">−</button>' +
-                    '<input type="number" inputmode="numeric" min="0" value="' + x.q + '" onfocus="this.select()" onkeydown="if(event.key===\'Enter\')this.blur()" onchange="cartSet(\'' + x.sku + '\',this.value)">' +
-                    '<button onclick="cambiar(\'' + x.sku + '\',1)">+</button></div></div>';
-            });
-            h += '</div>';
+            h += '<div class="cr" onclick="editarColor(_g[' + ai + '].n,_g[' + ai + '].cols[' + ci + '].c)">' +
+                '<div class="cr-img">' + (img ? '<img src="' + esc(chica(img)) + '" loading="lazy" referrerpolicy="no-referrer" alt="">' : '') + '</div>' +
+                '<div class="cr-d"><div class="cr-n">' + esc(c.c) + ' <small>· ' + qc + '</small></div>' +
+                '<div class="cr-t">' + c.its.map(x => esc(x.t) + ' <b>' + x.q + '</b>').join(' · ') + '</div></div>' +
+                '<span class="cr-ed">✎</span>' +
+                '<button class="cr-del" onclick="event.stopPropagation();quitarColorCart(' + ai + ',' + ci + ')" aria-label="Quitar color">🗑</button></div>';
         });
-        h += '<div class="art-del"><button onclick="quitarArtCart(' + ai + ')">🗑 Quitar ' + esc(a.n) + '</button></div></div>';
+        h += '</div>';
     });
     h += '<div class="tot"><span>TOTAL<small>' + prendas + ' prendas</small></span><span>' + fmt(total) + '</span></div>';
     h += '<div class="campo"><label>Tu nombre o negocio *</label><input id="cliNombre" autocomplete="name" placeholder="Ej: Moda Laura" value="' + esc(localStorage.getItem('mk_may_nombre') || '') + '" oninput="localStorage.setItem(\'mk_may_nombre\', this.value)"></div>';
@@ -571,7 +620,7 @@ function pintarCart() {
 }
 let _g = [];   // último pedido agrupado que se pintó (para los botones)
 function cartSet(sku, v) {
-    const q = setQ(sku, v);
+    const q = setQ(sku, Math.min(Number(v) || 0, maxDe(sku)));
     guardar(); pintar();
     if (!q) toast('Se quitó ese talle');
 }
@@ -588,9 +637,16 @@ function vaciar() {
     if (!skus.length || !confirm('¿Vaciar todo el pedido?')) return;
     quitarSkus(skus, 'Se vació el pedido');
 }
-function enviar() {
+let _enviando = false;
+async function enviar() {
     const inp = $('cliNombre'), nombre = inp.value.trim();
     if (!nombre) { inp.classList.remove('err'); void inp.offsetWidth; inp.classList.add('err'); inp.focus(); vibrar(60); toast('Escribí tu nombre o el de tu negocio'); return; }
+    if (_enviando) return;
+    _enviando = true; toast('Revisando stock…');
+    let cambios = 0;
+    try { cambios = await cargar(true); } finally { _enviando = false; }
+    if (cambios) { vibrar(80); toast('El stock cambió: revisá el pedido antes de enviarlo'); return; }
+    if (!Object.keys(pedido).length) return;
     const nota = (_nota || '').trim();
     const g = agrupado(), { prendas, total } = totales();
     let txt = '*PEDIDO MAYORISTA — ' + nombre + '*\n';
@@ -604,7 +660,7 @@ function enviar() {
     if (nota) txt += '\nNota: ' + nota + '\n';
     txt += '\nCODIGOS:\n';
     g.forEach(a => a.cols.forEach(c => c.its.forEach(x => { txt += x.sku + '\t' + x.q + '\n'; })));
-    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt), '_blank');
+    location.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt);   // abre WhatsApp directo al número de Mikra
 }
 
 // ── Pintar ──
@@ -628,6 +684,10 @@ function pintar() {
     pintarBarra();
 }
 cargar();
+// si la página quedó abierta un rato, al volver a mirarla trae el stock nuevo
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && CAT && Date.now() - _cargadoAt > 5 * 60 * 1000) cargar(true);
+});
 </script>
 </body>
 </html>
