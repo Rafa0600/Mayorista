@@ -76,8 +76,28 @@
     /* Barra del pedido */
     .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(243,244,246,.92); backdrop-filter: blur(6px); display: none; }
     .bar.show { display: block; }
-    .bar button { width: 100%; max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: none; border-radius: 14px; background: var(--navy); color: #fff; padding: 14px 16px; font-size: 1em; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(26,39,68,.35); }
-    body.en-cart .bar { display: none; }
+    .bar-in { max-width: 900px; margin: 0 auto; display: flex; gap: 8px; }
+    .bar button { border: none; border-radius: 14px; padding: 14px 14px; font-size: 0.97em; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .bar .b-main { flex: 1; min-width: 0; justify-content: space-between; background: var(--navy); color: #fff; box-shadow: 0 4px 16px rgba(26,39,68,.35); }
+    .bar .b-main span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar .b-main span:last-child { white-space: nowrap; }
+    .bar .b-sec { flex: none; background: #fff; color: var(--navy); border: 2px solid var(--navy); padding: 12px 11px; white-space: nowrap; gap: 6px; }
+    .bar .b-sec.solo { flex: 1; justify-content: center; }
+
+    /* Sugerencias del buscador */
+    .search input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+    .sug { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: #fff; color: var(--text); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.25); display: none; max-height: 70vh; overflow-y: auto; z-index: 40; }
+    .sug.show { display: block; }
+    .sug-todo { padding: 12px 14px; font-weight: 800; font-size: 0.9em; color: var(--acc); cursor: pointer; border-bottom: 1px solid var(--line); background: #f8fafc; }
+    .sug-it { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--line); }
+    .sug-it:last-child { border-bottom: none; }
+    .sug-it:active, .sug-todo:active { background: #eff6ff; }
+    .sug-it .mini { width: 40px; height: 52px; border-radius: 8px; overflow: hidden; background: #e5e7eb; flex: none; }
+    .sug-it .mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sug-it .sn { flex: 1; min-width: 0; font-weight: 800; font-size: 0.9em; line-height: 1.2; }
+    .sug-it .sn small { display: block; font-weight: 600; color: var(--muted); font-size: 0.85em; margin-top: 2px; }
+    .sug-it .sp { font-weight: 900; color: var(--navy); white-space: nowrap; font-size: 0.92em; }
+    .sug-it .ir { color: var(--muted); font-size: 1.3em; }
 
     /* Pedido */
     .linea-art { background: var(--card); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; }
@@ -157,6 +177,8 @@
     .cg { border-top: 1px solid var(--line); padding-top: 6px; margin-top: 4px; }
     .cg-h { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 0.9em; padding: 2px 0; }
     .cg-h .cnm { flex: 1; min-width: 0; }
+    .cg-img { width: 34px; height: 44px; border-radius: 7px; overflow: hidden; background: #e5e7eb; flex: none; cursor: zoom-in; }
+    .cg-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cg-h .cnm small { color: var(--muted); font-weight: 700; }
     .ic { border: 1px solid var(--line); background: #fff; border-radius: 9px; height: 32px; padding: 0 10px; font-size: 0.8em; font-weight: 800; cursor: pointer; color: var(--text); white-space: nowrap; }
     .ic.del { color: var(--bad); }
@@ -178,14 +200,18 @@
         <div class="top-title" id="topTitle"></div>
     </div>
     <div class="search" id="searchBox">
-        <input id="q" type="search" placeholder="🔍 Buscar artículo" autocomplete="off" oninput="buscar()">
+        <input id="q" type="search" placeholder="🔍 Buscar artículo" autocomplete="off" oninput="buscar()" onfocus="pintarSug()" onblur="setTimeout(cerrarSug, 150)" onkeydown="if(event.key==='Enter'){cerrarSug();this.blur();}">
         <button onclick="limpiarBusqueda()" aria-label="Borrar">✕</button>
+        <div class="sug" id="sug" onpointerdown="event.preventDefault()"></div>
     </div>
 </div>
 
 <div class="wrap" id="main"><div class="cargando">Cargando catálogo…</div></div>
 
-<div class="bar" id="bar"><button onclick="verPedido()"><span id="barTxt">🛒</span><span>Ver pedido ›</span></button></div>
+<div class="bar" id="bar"><div class="bar-in">
+    <button class="b-sec" id="barBack" onclick="atrasBarra()">‹ <span id="barBackTxt">Artículos</span></button>
+    <button class="b-main" id="barCart" onclick="verPedido()"><span id="barTxt">🛒</span><span id="barVer">Ver pedido ›</span></button>
+</div></div>
 <div class="zoom" id="zoom" onclick="this.classList.remove('show')"><img id="zoomImg" alt=""></div>
 <div class="toast" id="toast"></div>
 <div class="sheet-bg" id="sheetBg" onclick="if(event.target===this)cerrarEditor()"><div class="sheet" id="sheet"></div></div>
@@ -211,6 +237,11 @@ try { pedido = JSON.parse(localStorage.getItem('mk_may_pedido') || '{}') || {}; 
 
 // Rango de stock (el worker nunca manda el número exacto)
 function rangoTxt(r) { return r <= 0 ? 'Agotado' : r === 1 ? 'Últimas' : '+' + r; }
+function puntos(c) { return c.t.reduce((s, t) => s + Math.max(0, t[2]), 0); }   // stock aproximado de un color
+function fotoDe(nombre, color) {
+    const a = CAT && CAT.arts.find(x => x.n === nombre), c = a && a.cols.find(x => x.c === color);
+    return c ? c.img : '';
+}
 function guardar() { try { localStorage.setItem('mk_may_pedido', JSON.stringify(pedido)); } catch (e) {} }
 function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2200); }
 function vibrar(ms) { try { navigator.vibrate && navigator.vibrate(ms); } catch (e) {} }
@@ -226,6 +257,11 @@ async function cargar() {
         const d = await r.json();
         if (!d || !d.arts) throw new Error(d && d.error || 'sin datos');
         CAT = d;
+        // primero los colores con más stock (el worker manda rangos: se suman)
+        CAT.arts.forEach(a => {
+            a.cols.sort((x, y) => puntos(y) - puntos(x) || x.c.localeCompare(y.c, 'es'));
+            a.st = a.cols.reduce((s, c) => s + puntos(c), 0);
+        });
         // lo que había en el pedido y ya no existe / se agotó: se saca
         const vivos = {};
         CAT.arts.forEach(a => a.cols.forEach(c => c.t.forEach(t => { vivos[t[1]] = { r: t[2], p: a.p }; })));
@@ -243,15 +279,27 @@ async function cargar() {
 }
 
 // ── Navegación (el botón Atrás del celular también funciona) ──
+let _scrollLista = 0, _internas = 0;   // _internas: pasos dados dentro de la página (para que Atrás no se vaya del sitio)
 function ir(v, art) {
+    if (vista === 'lista' && v !== 'lista') _scrollLista = window.scrollY;
     vista = v; artActual = art || null;
     document.body.classList.toggle('en-art', v === 'art');
     document.body.classList.toggle('en-cart', v === 'cart');
+    cerrarSug();
     pintar();
-    window.scrollTo(0, 0);
+    window.scrollTo(0, v === 'lista' ? _scrollLista : 0);   // al volver, la lista queda donde estaba
 }
-function volver() { history.back(); }
-window.addEventListener('popstate', abrirDesdeHash);
+try { history.scrollRestoration = 'manual'; } catch (e) {}   // la posición de la lista la maneja ir()
+function nav(hash) { history.pushState(null, '', '#' + hash); _internas++; abrirDesdeHash(); }
+function aLista() {   // entró directo con un link: no hay "atrás" adentro de la página
+    history.replaceState(null, '', location.pathname + location.search); abrirDesdeHash();
+}
+function volver() { if (_internas > 0) history.back(); else aLista(); }
+function atrasBarra() {
+    if (vista === 'art') { if (_internas > 0) history.back(); else aLista(); }   // a la lista
+    else volver();   // desde el pedido: a donde estaba
+}
+window.addEventListener('popstate', () => { _internas = Math.max(0, _internas - 1); abrirDesdeHash(); });
 function abrirDesdeHash() {
     const h = decodeURIComponent(location.hash.slice(1));
     if (h === 'pedido') return ir('cart');
@@ -261,17 +309,39 @@ function abrirDesdeHash() {
     }
     ir('lista');
 }
-function abrirArt(i) { const a = filtrados[i]; location.hash = 'a=' + encodeURIComponent(a.n); }
-function verPedido() { location.hash = 'pedido'; }
+function irArt(nombre) { nav('a=' + encodeURIComponent(nombre)); }
+function abrirArt(i) { irArt(filtrados[i].n); }
+function verPedido() { nav('pedido'); }
 
 // ── Lista ──
 let filtrados = [];
-function buscar() { $('searchBox').classList.toggle('con', !!$('q').value); if (vista === 'lista') pintar(); }
+function buscar() { $('searchBox').classList.toggle('con', !!$('q').value); if (vista === 'lista') pintar(); pintarSug(); }
+function coincide(a, q) { return !q || q.split(/\s+/).every(w => norm(a.n).includes(w) || a.cols.some(c => norm(c.c).includes(w))); }
+let _sug = [];
+function pintarSug() {
+    const box = $('sug'), q = norm($('q').value.trim());
+    if (!CAT || !q || document.activeElement !== $('q')) { box.classList.remove('show'); return; }
+    const todos = CAT.arts.filter(a => coincide(a, q));
+    // primero los que lo tienen en el NOMBRE, y dentro de eso lo que más stock tiene
+    const enNombre = a => q.split(/\s+/).every(w => norm(a.n).includes(w));
+    _sug = todos.map(a => ({ a, nom: enNombre(a) })).sort((x, y) => (y.nom - x.nom) || (y.a.st - x.a.st)).slice(0, 8)
+        .map(x => { x.a._col = x.nom ? '' : (x.a.cols.find(c => q.split(/\s+/).some(w => norm(c.c).includes(w))) || {}).c || ''; return x.a; });
+    if (!_sug.length) { box.innerHTML = '<div class="sug-todo" style="color:var(--muted)">Sin resultados</div>'; box.classList.add('show'); return; }
+    box.innerHTML = '<div class="sug-todo" onclick="cerrarSug();$(\'q\').blur()">🔍 Ver los ' + todos.length + ' resultados de "' + esc($('q').value.trim()) + '"</div>' +
+        _sug.map((a, i) => {
+            const img = (a.cols.find(c => c.img) || {}).img || '';
+            return '<div class="sug-it" onclick="irSug(' + i + ')"><div class="mini">' + (img ? '<img src="' + esc(chica(img)) + '" referrerpolicy="no-referrer" alt="">' : '') + '</div>' +
+                '<div class="sn">' + esc(a.n) + '<small>' + (a._col ? 'en color ' + esc(a._col) : a.cols.length + (a.cols.length === 1 ? ' color' : ' colores')) + '</small></div><span class="sp">' + fmt(a.p) + '</span><span class="ir">›</span></div>';
+        }).join('');
+    box.classList.add('show');
+}
+function cerrarSug() { $('sug').classList.remove('show'); }
+function irSug(i) { const a = _sug[i]; if (!a) return; cerrarSug(); $('q').blur(); irArt(a.n); }
 function limpiarBusqueda() { $('q').value = ''; buscar(); }
 function enPedidoDe(nombre) { return Object.values(pedido).filter(x => x.n === nombre).reduce((s, x) => s + x.q, 0); }
 function pintarLista() {
     const q = norm($('q').value.trim());
-    filtrados = CAT.arts.filter(a => !q || q.split(/\s+/).every(w => norm(a.n).includes(w) || a.cols.some(c => norm(c.c).includes(w))));
+    filtrados = CAT.arts.filter(a => coincide(a, q));
     $('topTitle').textContent = '';
     let h = '<div class="info"><span>' + filtrados.length + ' artículos · precios mayoristas</span><span>Stock ' + hace(CAT.stockAt) + '</span></div>';
     if (!filtrados.length) h += '<div class="vacio">No encontramos "' + esc($('q').value) + '"</div>';
@@ -477,7 +547,9 @@ function pintarCart() {
         h += '<div class="linea-art"><div class="h"><span>' + esc(a.n) + '</span><span>' + fmt(q * a.p) + '</span></div><div class="sub">' + q + ' prendas × ' + fmt(a.p) + '</div>';
         a.cols.forEach((c, ci) => {
             const qc = c.its.reduce((t, x) => t + x.q, 0);
-            h += '<div class="cg"><div class="cg-h"><span class="cnm">' + esc(c.c) + ' <small>· ' + qc + '</small></span>' +
+            const img = fotoDe(a.n, c.c);
+            h += '<div class="cg"><div class="cg-h"><div class="cg-img" onclick="zoom(\'' + esc(img) + '\')">' + (img ? '<img src="' + esc(chica(img)) + '" loading="lazy" referrerpolicy="no-referrer" alt="">' : '') + '</div>' +
+                '<span class="cnm">' + esc(c.c) + ' <small>· ' + qc + '</small></span>' +
                 '<button class="ic" onclick="editarColor(_g[' + ai + '].n,_g[' + ai + '].cols[' + ci + '].c)">✎ Editar</button>' +
                 '<button class="ic del" onclick="quitarColorCart(' + ai + ',' + ci + ')" aria-label="Quitar color">🗑</button></div>';
             c.its.forEach(x => {
@@ -538,8 +610,15 @@ function enviar() {
 // ── Pintar ──
 function pintarBarra() {
     const { prendas, total } = totales();
-    $('bar').classList.toggle('show', prendas > 0);
-    $('barTxt').textContent = '🛒 ' + prendas + (prendas === 1 ? ' prenda' : ' prendas') + ' · ' + fmt(total);
+    // lista: solo el pedido · artículo: ‹ Artículos + pedido · pedido: ‹ Seguir comprando
+    $('bar').classList.toggle('show', vista !== 'lista' || prendas > 0);
+    $('barBack').style.display = vista === 'lista' ? 'none' : '';
+    $('barBackTxt').textContent = vista === 'cart' ? 'Seguir comprando' : 'Artículos';
+    $('barCart').style.display = vista === 'cart' || !prendas ? 'none' : '';
+    $('barBack').classList.toggle('solo', $('barCart').style.display === 'none');
+    const corto = vista !== 'lista';   // al lado del botón ‹ Artículos va más corto
+    $('barTxt').textContent = '🛒 ' + prendas + (corto ? '' : prendas === 1 ? ' prenda' : ' prendas') + ' · ' + fmt(total);
+    $('barVer').textContent = corto ? 'Pedido ›' : 'Ver pedido ›';
 }
 function pintar() {
     if (!CAT) return;
